@@ -8,6 +8,7 @@ import {
   Button,
   Stack
 } from '@mui/material';
+import { toast } from 'react-toastify';
 
 export default function EmailCompose({ open, onClose, onSubmit }) {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ export default function EmailCompose({ open, onClose, onSubmit }) {
     subject: '',
     body: ''
   });
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData(prev => ({
@@ -27,10 +29,24 @@ export default function EmailCompose({ open, onClose, onSubmit }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await onSubmit(formData);
-    setFormData({ to: '', cc: '', bcc: '', subject: '', body: '' });
-    onClose();
+  
+    try {
+      setLoading(true);
+      
+      if (onSubmit) {
+        await onSubmit(formData);
+      }
+  
+      setFormData({ to: '', cc: '', bcc: '', subject: '', body: '' });
+      toast.success('Email sent successfully!');
+      onClose();
+    } catch (error) {
+      toast.error(error.message || 'Failed to send email');
+    } finally {
+      setLoading(false);
+    }
   };
+  
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
@@ -45,6 +61,7 @@ export default function EmailCompose({ open, onClose, onSubmit }) {
               value={formData.to}
               onChange={handleChange}
               required
+              disabled={loading}
             />
             <TextField
               name="cc"
@@ -52,6 +69,7 @@ export default function EmailCompose({ open, onClose, onSubmit }) {
               fullWidth
               value={formData.cc}
               onChange={handleChange}
+              disabled={loading}
             />
             <TextField
               name="bcc"
@@ -59,6 +77,7 @@ export default function EmailCompose({ open, onClose, onSubmit }) {
               fullWidth
               value={formData.bcc}
               onChange={handleChange}
+              disabled={loading}
             />
             <TextField
               name="subject"
@@ -67,6 +86,7 @@ export default function EmailCompose({ open, onClose, onSubmit }) {
               value={formData.subject}
               onChange={handleChange}
               required
+              disabled={loading}
             />
             <TextField
               name="body"
@@ -77,12 +97,21 @@ export default function EmailCompose({ open, onClose, onSubmit }) {
               value={formData.body}
               onChange={handleChange}
               required
+              disabled={loading}
             />
           </Stack>
         </DialogContent>
         <DialogActions>
-          <Button onClick={onClose}>Cancel</Button>
-          <Button type="submit" variant="contained">Send</Button>
+          <Button onClick={onClose} disabled={loading}>
+            Cancel
+          </Button>
+          <Button 
+            type="submit" 
+            variant="contained" 
+            disabled={loading}
+          >
+            {loading ? 'Sending...' : 'Send'}
+          </Button>
         </DialogActions>
       </form>
     </Dialog>
