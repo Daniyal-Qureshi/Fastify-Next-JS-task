@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "@fastify/cors": "^9.0.1",
+    "dotenv": "^16.4.5",
     "fastify": "^4.27.0",
     "knex": "^3.1.0",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "zod": "^3.22.4"
   },
   "name": "backend",
   "version": "1.0.0",
@@ -14,7 +17,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "knex migrate:latest",
     "start": "node index.js",
-    "dev": "PORT=3001 nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
