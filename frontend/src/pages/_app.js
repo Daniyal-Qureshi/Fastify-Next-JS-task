@@ -1,5 +1,7 @@
 import "@/styles/globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
+import { ToastContainer } from 'react-toastify';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -13,6 +15,17 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }
