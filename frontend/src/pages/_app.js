@@ -2,6 +2,9 @@ import "@/styles/globals.css";
 import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
 import { ToastContainer } from 'react-toastify';
+import EmailIcon from '@mui/icons-material/Email';
+import {AccountBox} from '@mui/icons-material';
+import Link from 'next/link';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -12,6 +15,14 @@ export default function App({ Component, pageProps }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div className="sidebar">
+        <Link href="/">
+          <EmailIcon />
+        </Link>
+        <Link href="/leads">
+          <AccountBox />
+        </Link>
+      </div>
       <main>
         <Component {...pageProps} />
       </main>
