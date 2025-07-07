@@ -1,8 +1,10 @@
 import "@/styles/globals.css";
+import 'react-toastify/dist/ReactToastify.css';
 import Head from 'next/head';
-import Link from 'next/link';
+import { ToastContainer } from 'react-toastify';
 import EmailIcon from '@mui/icons-material/Email';
 import {AccountBox} from '@mui/icons-material';
+import Link from 'next/link';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -24,6 +26,17 @@ export default function App({ Component, pageProps }) {
       <main>
         <Component {...pageProps} />
       </main>
+      <ToastContainer 
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </>
   );
 }
